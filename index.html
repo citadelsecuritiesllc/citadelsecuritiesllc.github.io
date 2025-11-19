@@ -188,57 +188,93 @@ src="https://www.facebook.com/tr?id=1527700855048841&ev=PageView&noscript=1"
   </div>
 </header>
 
-  <!-- START: Top 10 Live Indian Stocks Widget -->
-<section class="card" id="live-stocks">
+<!-- START: Top 10 Live Indian Stocks Ticker -->
+<section class="card" id="live-stocks" style="padding:15px; border-radius:8px; background:#f0f4ff; overflow:hidden;">
   <h2 style="color:#082359; margin-bottom:15px;">🔥 Top 10 Trending Indian Stocks</h2>
-  <div id="stocks-container" style="display:flex; flex-direction:column; gap:8px; font-weight:600;"></div>
+  <div class="marquee">
+    <div class="marquee-content" id="stocks-container" style="display:flex; gap:25px; font-weight:600;"></div>
+  </div>
 </section>
 
+<style>
+/* Marquee animation */
+.marquee {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee-content {
+  display: inline-flex;
+  animation: scroll 25s linear infinite;
+}
+
+.marquee-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: #ffffffdd;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  font-size: 0.95rem;
+}
+
+.green { color: #028800; }
+.red { color: #c00; }
+
+@keyframes scroll {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+</style>
+
 <script>
+// Top 10 stocks
 const stockSymbols = ["RELIANCE","TCS","INFY","HDFCBANK","ICICIBANK","HINDUNILVR","BHARTIARTL","LT","KOTAKBANK","AXISBANK"];
 const container = document.getElementById("stocks-container");
 
+// Format change with arrows
 function formatChange(change){
   if(change>0) return `+${change.toFixed(2)} ↑`;
   if(change<0) return `${change.toFixed(2)} ↓`;
   return "0.00";
 }
 
-// Minimal fetch function using proxy-free public JSON endpoint
+// Fetch stock price from unofficial NSE endpoint
 async function fetchStock(symbol){
   try{
-    const res = await fetch(`https://api.kite.trade/quote?symbol=${symbol}`); // Example free API
+    const res = await fetch(`https://www.nseindia.com/api/quote-equity?symbol=${symbol}`, {
+      headers: { "Accept": "application/json" }
+    });
     const data = await res.json();
-    const price = data.lastPrice || 0;
-    const change = data.change || 0;
-    return {price,change};
-  } catch(e){ return {price:"N/A",change:0}; }
+    const price = parseFloat(data?.priceInfo?.lastPrice) || 0;
+    const change = parseFloat(data?.priceInfo?.change) || 0;
+    return {price, change};
+  } catch(e){
+    return {price:"N/A", change:0};
+  }
 }
 
+// Render all stocks
 async function renderStocks(){
-  container.innerHTML="";
+  container.innerHTML = "";
   for(const sym of stockSymbols){
-    const {price,change}=await fetchStock(sym);
-    const div=document.createElement("div");
-    div.style.display="flex";
-    div.style.justifyContent="space-between";
-    div.style.padding="4px 10px";
-    div.style.borderRadius="6px";
-    div.style.background="#f0f4ff";
-    div.style.fontSize="0.95rem";
-
-    let color="#333"; if(change>0) color="#028800"; if(change<0) color="#c00";
-    div.innerHTML=`<span>${sym}</span> <span style="color:${color}">${price} (${formatChange(change)})</span>`;
+    const {price, change} = await fetchStock(sym);
+    const div = document.createElement("div");
+    div.className = "marquee-item";
+    let colorClass = change>0 ? "green" : change<0 ? "red" : "";
+    div.innerHTML = `<span>${sym}</span> <span class="${colorClass}">${price} (${formatChange(change)})</span>`;
     container.appendChild(div);
   }
 }
 
-// Initial render + auto refresh
+// Initial render + auto-refresh every 3 seconds
 renderStocks();
-setInterval(renderStocks,3000);
+setInterval(renderStocks, 3000);
 </script>
 <!-- END -->
-
+  
 <section class="card">
   <img src="https://github.com/citadelsecuritiesllc/citadelsecuritiesllc.github.io/blob/4c1e313514c10261a8e6b6c08b17689091193236/Snipaste_2025-11-04_14-23-26.png?raw=true" 
      alt="Learn Indian Stock Market with Real Trading Insights"
