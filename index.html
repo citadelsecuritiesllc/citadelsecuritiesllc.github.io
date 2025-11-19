@@ -175,32 +175,35 @@ src="https://www.facebook.com/tr?id=1527700855048841&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
 
-    <meta charset="UTF-8">
+ <meta charset="UTF-8">
   <title>Stock Ticker Demo</title>
   <style>
     body {
       background: #f0f0f0;
       font-family: Arial, sans-serif;
-      padding: 50px;
-      display: flex;
-      justify-content: center;
+      margin: 0;
+      padding: 0;
     }
 
+    /* Ticker at top, white/light theme */
     .marquee {
       overflow: hidden;
       white-space: nowrap;
-      background: #111;
-      color: #fff;
-      padding: 10px 0;
+      background: #fff;
+      color: #111;
+      padding: 10px 20px;
       font-size: 16px;
-      border-radius: 6px;
-      width: 90%;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      border-radius: 0 0 6px 6px;
+      width: 100%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
     }
 
     .marquee-content {
       display: inline-block;
-      padding-left: 100%;
       animation: scroll 20s linear infinite;
     }
 
@@ -217,6 +220,11 @@ src="https://www.facebook.com/tr?id=1527700855048841&ev=PageView&noscript=1"
     @keyframes scroll {
       0% { transform: translateX(0); }
       100% { transform: translateX(-100%); }
+    }
+
+    /* Push page content below ticker */
+    .page-content {
+      padding-top: 60px; /* same as ticker height */
     }
   </style>
   
@@ -416,7 +424,7 @@ function startCountdown() {
 startCountdown();
 </script>
 
-  <div class="marquee">
+<div class="marquee">
   <div class="marquee-content">
     <div class="marquee-item">RELIANCE <span>1519 ↑</span></div>
     <div class="marquee-item">TCS <span>3147 ↓</span></div>
@@ -426,6 +434,11 @@ startCountdown();
     <div class="marquee-item">LT <span>3456 ↓</span></div>
     <div class="marquee-item">SBIN <span>512 ↑</span></div>
   </div>
+</div>
+
+<div class="page-content">
+  <h1>Welcome to My Landing Page</h1>
+  <p>Page content goes here...</p>
 </div>
 
 <script>
