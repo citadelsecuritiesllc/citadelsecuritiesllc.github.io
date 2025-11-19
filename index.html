@@ -175,36 +175,70 @@ src="https://www.facebook.com/tr?id=1527700855048841&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
 
- <meta charset="UTF-8">
-  <title>Stock Ticker Demo</title>
+  <meta charset="UTF-8">
+  <title>Stock Ticker in Hero</title>
   <style>
     body {
       background: #f0f0f0;
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
+      display: flex;
+      justify-content: center;
     }
 
-    /* Ticker at top, white/light theme */
+    /* Hero card */
+    .hero-card {
+      background: #fff;
+      width: 90%;
+      max-width: 800px;
+      padding: 40px 30px;
+      margin: 50px 0;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .hero-card h1 {
+      margin: 0 0 20px 0;
+      font-size: 32px;
+      color: #111;
+    }
+
+    .hero-card p {
+      margin: 0 0 20px 0;
+      color: #555;
+      font-size: 18px;
+    }
+
+    .hero-card button {
+      padding: 12px 30px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      background: #007bff;
+      color: #fff;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    /* Ticker inside hero */
     .marquee {
       overflow: hidden;
       white-space: nowrap;
-      background: #fff;
+      background: #f8f8f8;
       color: #111;
-      padding: 10px 20px;
+      padding: 10px 15px;
       font-size: 16px;
-      border-radius: 0 0 6px 6px;
-      width: 100%;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 1000;
+      border-radius: 6px;
+      margin: 20px auto; /* space between text and button */
+      width: 100%; /* full width of hero card */
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
     }
 
     .marquee-content {
       display: inline-block;
-      animation: scroll 20s linear infinite;
+      animation: scroll 15s linear infinite;
     }
 
     .marquee-item {
@@ -220,11 +254,6 @@ src="https://www.facebook.com/tr?id=1527700855048841&ev=PageView&noscript=1"
     @keyframes scroll {
       0% { transform: translateX(0); }
       100% { transform: translateX(-100%); }
-    }
-
-    /* Push page content below ticker */
-    .page-content {
-      padding-top: 60px; /* same as ticker height */
     }
   </style>
   
@@ -424,21 +453,24 @@ function startCountdown() {
 startCountdown();
 </script>
 
-<div class="marquee">
-  <div class="marquee-content">
-    <div class="marquee-item">RELIANCE <span>1519 ↑</span></div>
-    <div class="marquee-item">TCS <span>3147 ↓</span></div>
-    <div class="marquee-item">INFY <span>1542 ↑</span></div>
-    <div class="marquee-item">HDFC <span>2578 ↓</span></div>
-    <div class="marquee-item">ICICI <span>1015 ↑</span></div>
-    <div class="marquee-item">LT <span>3456 ↓</span></div>
-    <div class="marquee-item">SBIN <span>512 ↑</span></div>
-  </div>
-</div>
+<div class="hero-card">
+  <h1>Learn Stock Market Trading</h1>
+  <p>Get real market experience and practical knowledge to trade confidently.</p>
 
-<div class="page-content">
-  <h1>Welcome to My Landing Page</h1>
-  <p>Page content goes here...</p>
+  <!-- Stock Ticker -->
+  <div class="marquee">
+    <div class="marquee-content">
+      <div class="marquee-item">RELIANCE <span>1519 ↑</span></div>
+      <div class="marquee-item">TCS <span>3147 ↓</span></div>
+      <div class="marquee-item">INFY <span>1542 ↑</span></div>
+      <div class="marquee-item">HDFC <span>2578 ↓</span></div>
+      <div class="marquee-item">ICICI <span>1015 ↑</span></div>
+      <div class="marquee-item">LT <span>3456 ↓</span></div>
+      <div class="marquee-item">SBIN <span>512 ↑</span></div>
+    </div>
+  </div>
+
+  <button>Get Started</button>
 </div>
 
 <script>
@@ -453,7 +485,7 @@ startCountdown();
       price += up ? 1 : -1;
       item.textContent = `${price} ${up ? '↑' : '↓'}`;
     });
-  }, 3000); // update every 3 seconds
+  }, 3000);
 </script>
 
 </body>
