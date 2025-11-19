@@ -155,6 +155,12 @@
   margin: 0 auto;
   text-align: center;
 }
+    #stock-ticker span {
+  display: inline-block;
+  margin: 0 40px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+}
   </style>
   
   <!-- Meta Pixel Code -->
@@ -174,88 +180,6 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=1527700855048841&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
-
-  <meta charset="UTF-8">
-  <title>Stock Ticker in Hero</title>
-  <style>
-    body {
-      background: #f0f0f0;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-    }
-
-    /* Hero card */
-    .hero-card {
-      background: #fff;
-      width: 90%;
-      max-width: 800px;
-      padding: 40px 30px;
-      margin: 50px 0;
-      border-radius: 10px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-
-    .hero-card h1 {
-      margin: 0 0 20px 0;
-      font-size: 32px;
-      color: #111;
-    }
-
-    .hero-card p {
-      margin: 0 0 20px 0;
-      color: #555;
-      font-size: 18px;
-    }
-
-    .hero-card button {
-      padding: 12px 30px;
-      font-size: 16px;
-      border: none;
-      border-radius: 6px;
-      background: #007bff;
-      color: #fff;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-
-    /* Ticker inside hero */
-    .marquee {
-      overflow: hidden;
-      white-space: nowrap;
-      background: #f8f8f8;
-      color: #111;
-      padding: 10px 15px;
-      font-size: 16px;
-      border-radius: 6px;
-      margin: 20px auto; /* space between text and button */
-      width: 100%; /* full width of hero card */
-      box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
-    }
-
-    .marquee-content {
-      display: inline-block;
-      animation: scroll 15s linear infinite;
-    }
-
-    .marquee-item {
-      display: inline-block;
-      margin-right: 50px;
-    }
-
-    .marquee-item span {
-      font-weight: bold;
-      margin-left: 5px;
-    }
-
-    @keyframes scroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-100%); }
-    }
-  </style>
   
 </head>
 <body>
@@ -266,8 +190,14 @@ src="https://www.facebook.com/tr?id=1527700855048841&ev=PageView&noscript=1"
          alt="Citadel Securities Logo"
          class="header-image">
 
-    <h1 style="color: #082359;">Learn Stock Market Trading With Real Market Experience</h1>
+<h1 style="color: #082359;">Learn Stock Market Trading With Real Market Experience</h1>
+
+<!-- Stock Ticker -->
+<div id="stock-ticker" style="overflow:hidden; white-space:nowrap; margin-top:20px; background:#082359; color:#fff; border-radius:8px; padding:10px 0; font-weight:bold;">
+  <div id="ticker-content" style="display:inline-block; padding-left:100%; will-change:transform;">
+    Loading stocks...
   </div>
+</div>
 </header>
 
 <section class="card">
@@ -453,40 +383,44 @@ function startCountdown() {
 startCountdown();
 </script>
 
-<div class="hero-card">
-  <h1>Learn Stock Market Trading</h1>
-  <p>Get real market experience and practical knowledge to trade confidently.</p>
+  <script>
+const tickerContent = document.getElementById('ticker-content');
 
-  <!-- Stock Ticker -->
-  <div class="marquee">
-    <div class="marquee-content">
-      <div class="marquee-item">RELIANCE <span>1519 ↑</span></div>
-      <div class="marquee-item">TCS <span>3147 ↓</span></div>
-      <div class="marquee-item">INFY <span>1542 ↑</span></div>
-      <div class="marquee-item">HDFC <span>2578 ↓</span></div>
-      <div class="marquee-item">ICICI <span>1015 ↑</span></div>
-      <div class="marquee-item">LT <span>3456 ↓</span></div>
-      <div class="marquee-item">SBIN <span>512 ↑</span></div>
-    </div>
-  </div>
+// Mock top 10 stocks with price and 24h % change
+const stocks = [
+  {symbol:"ITC", price:403.70, change:-0.53},
+  {symbol:"RELIANCE", price:2674.50, change:+0.46},
+  {symbol:"TCS", price:3265.80, change:-0.25},
+  {symbol:"INFY", price:1840.20, change:+0.28},
+  {symbol:"HDFC", price:2562.00, change:-0.14},
+  {symbol:"ICICI", price:1054.30, change:+0.11},
+  {symbol:"HINDUNILVR", price:2523.50, change:-0.32},
+  {symbol:"SBIN", price:615.70, change:+0.05},
+  {symbol:"AXISBANK", price:952.10, change:-0.40},
+  {symbol:"LT", price:2453.60, change:+0.20}
+];
 
-  <button>Get Started</button>
-</div>
+// Render ticker
+tickerContent.innerHTML = stocks.map(s => {
+  const sign = s.change >= 0 ? "+" : "";
+  return `<span>${s.symbol} ${s.price.toFixed(2)} ${sign}${s.change.toFixed(2)} (${sign}${s.change.toFixed(2)}%)</span>`;
+}).join('');
 
-<script>
-  // Optional: Simulate price changes for demo
-  const items = document.querySelectorAll('.marquee-item span');
+// Animate ticker smoothly
+let offset = 0;
+function animateTicker() {
+  offset -= 1; // move left 1px per frame
+  tickerContent.style.transform = `translateX(${offset}px)`;
+  
+  // Reset if fully scrolled
+  if(Math.abs(offset) > tickerContent.scrollWidth / 2) {
+    offset = 0;
+  }
+  requestAnimationFrame(animateTicker);
+}
 
-  setInterval(() => {
-    items.forEach(item => {
-      const up = Math.random() > 0.5;
-      let [price, arrow] = item.textContent.split(' ');
-      price = parseInt(price);
-      price += up ? 1 : -1;
-      item.textContent = `${price} ${up ? '↑' : '↓'}`;
-    });
-  }, 3000);
+animateTicker();
 </script>
-
+  
 </body>
 </html>
