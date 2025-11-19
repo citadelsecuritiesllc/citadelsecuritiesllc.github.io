@@ -188,6 +188,57 @@ src="https://www.facebook.com/tr?id=1527700855048841&ev=PageView&noscript=1"
   </div>
 </header>
 
+  <!-- START: Top 10 Live Indian Stocks Widget -->
+<section class="card" id="live-stocks">
+  <h2 style="color:#082359; margin-bottom:15px;">🔥 Top 10 Trending Indian Stocks</h2>
+  <div id="stocks-container" style="display:flex; flex-direction:column; gap:8px; font-weight:600;"></div>
+</section>
+
+<script>
+const stockSymbols = ["RELIANCE","TCS","INFY","HDFCBANK","ICICIBANK","HINDUNILVR","BHARTIARTL","LT","KOTAKBANK","AXISBANK"];
+const container = document.getElementById("stocks-container");
+
+function formatChange(change){
+  if(change>0) return `+${change.toFixed(2)} ↑`;
+  if(change<0) return `${change.toFixed(2)} ↓`;
+  return "0.00";
+}
+
+// Minimal fetch function using proxy-free public JSON endpoint
+async function fetchStock(symbol){
+  try{
+    const res = await fetch(`https://api.kite.trade/quote?symbol=${symbol}`); // Example free API
+    const data = await res.json();
+    const price = data.lastPrice || 0;
+    const change = data.change || 0;
+    return {price,change};
+  } catch(e){ return {price:"N/A",change:0}; }
+}
+
+async function renderStocks(){
+  container.innerHTML="";
+  for(const sym of stockSymbols){
+    const {price,change}=await fetchStock(sym);
+    const div=document.createElement("div");
+    div.style.display="flex";
+    div.style.justifyContent="space-between";
+    div.style.padding="4px 10px";
+    div.style.borderRadius="6px";
+    div.style.background="#f0f4ff";
+    div.style.fontSize="0.95rem";
+
+    let color="#333"; if(change>0) color="#028800"; if(change<0) color="#c00";
+    div.innerHTML=`<span>${sym}</span> <span style="color:${color}">${price} (${formatChange(change)})</span>`;
+    container.appendChild(div);
+  }
+}
+
+// Initial render + auto refresh
+renderStocks();
+setInterval(renderStocks,3000);
+</script>
+<!-- END -->
+
 <section class="card">
   <img src="https://github.com/citadelsecuritiesllc/citadelsecuritiesllc.github.io/blob/4c1e313514c10261a8e6b6c08b17689091193236/Snipaste_2025-11-04_14-23-26.png?raw=true" 
      alt="Learn Indian Stock Market with Real Trading Insights"
