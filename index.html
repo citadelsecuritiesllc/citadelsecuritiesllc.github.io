@@ -323,6 +323,34 @@
   });
   
 </script>
+  <script>
+function startCountdown() {
+  const timers = document.querySelectorAll('.countdown');
+  let totalSeconds = 27 * 60 + 30; // 27:30
+
+  function updateTimer() {
+    let minutes = Math.floor(totalSeconds / 60);
+    let seconds = totalSeconds % 60;
+
+    timers.forEach(t => {
+      t.textContent = 
+        String(minutes).padStart(2, '0') + ":" + 
+        String(seconds).padStart(2, '0');
+    });
+
+    if (totalSeconds > 0) {
+      totalSeconds--;
+    } else {
+      totalSeconds = 27 * 60 + 30; // restart automatically
+    }
+  }
+
+  updateTimer();
+  setInterval(updateTimer, 1000);
+}
+
+startCountdown();
+</script>
 
 </body>
 </html>
