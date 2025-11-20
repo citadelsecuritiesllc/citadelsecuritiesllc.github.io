@@ -155,70 +155,6 @@
   margin: 0 auto;
   text-align: center;
 }
-    .header-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-      box-sizing: border-box;
-      text-align: center;
-    }
-
-    .header-image {
-      max-width: 150px;
-      height: auto;
-      margin-bottom: 20px;
-    }
-
-    .header-container h1 {
-      color: #082359;
-      font-size: 2rem;
-      margin-bottom: 20px;
-    }
-
-    .ticker-wrap {
-      overflow: hidden;
-      background: #1b1f30;
-      border-top: 2px solid #444;
-      border-bottom: 2px solid #444;
-      height: 40px;
-      display: flex;
-      align-items: center;
-    }
-
-    .ticker {
-      display: flex;
-      white-space: nowrap;
-      will-change: transform;
-      animation: ticker-scroll 25s linear infinite;
-    }
-
-    .ticker-item {
-      display: inline-block;
-      padding: 0 3rem;
-      font-family: monospace;
-      font-weight: 600;
-      font-size: 1rem;
-    }
-
-    .up { color: #4caf50; }
-    .down { color: #f44336; }
-
-    @keyframes ticker-scroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
-    @media (max-width: 768px) {
-      .header-container h1 { font-size: 1.5rem; }
-      .ticker-item { padding: 0 2rem; font-size: 0.9rem; }
-      .ticker-wrap { height: 35px; }
-    }
-
-    @media (max-width: 480px) {
-      .header-container h1 { font-size: 1.2rem; }
-      .ticker-item { padding: 0 1.5rem; font-size: 0.8rem; }
-      .ticker-wrap { height: 30px; }
-    }
   </style>
   
   <!-- Meta Pixel Code -->
@@ -248,24 +184,7 @@ src="https://www.facebook.com/tr?id=1527700855048841&ev=PageView&noscript=1"
          alt="Citadel Securities Logo"
          class="header-image">
 
-    <h1>Learn Stock Market Trading With Real Market Experience</h1>
-
-    <!-- NSE-style ticker -->
-    <div class="ticker-wrap">
-      <div class="ticker" id="ticker">
-        <div class="ticker-item">INFY 1,540.00 <span class="up">+55.60 (3.74%)</span></div>
-        <div class="ticker-item">TCS 3,540.00 <span class="down">-20.10 (0.56%)</span></div>
-        <div class="ticker-item">RELIANCE 2,310.50 <span class="up">+15.30 (0.66%)</span></div>
-        <div class="ticker-item">HDFCBANK 1,650.20 <span class="up">+5.50 (0.33%)</span></div>
-        <div class="ticker-item">ICICIBANK 950.40 <span class="down">-3.20 (0.34%)</span></div>
-        <!-- duplicate for seamless loop -->
-        <div class="ticker-item">INFY 1,540.00 <span class="up">+55.60 (3.74%)</span></div>
-        <div class="ticker-item">TCS 3,540.00 <span class="down">-20.10 (0.56%)</span></div>
-        <div class="ticker-item">RELIANCE 2,310.50 <span class="up">+15.30 (0.66%)</span></div>
-        <div class="ticker-item">HDFCBANK 1,650.20 <span class="up">+5.50 (0.33%)</span></div>
-        <div class="ticker-item">ICICIBANK 950.40 <span class="down">-3.20 (0.34%)</span></div>
-      </div>
-    </div>
+    <h1 style="color: #082359;">Learn Stock Market Trading With Real Market Experience</h1>
   </div>
 </header>
 
@@ -450,36 +369,6 @@ function startCountdown() {
 }
 
 startCountdown();
-</script>
-
-  <script>
-const ticker = document.getElementById('ticker');
-const stocks = [
-  { name: 'INFY', price: 1540.00, change: 55.60 },
-  { name: 'TCS', price: 3540.00, change: -20.10 },
-  { name: 'RELIANCE', price: 2310.50, change: 15.30 },
-  { name: 'HDFCBANK', price: 1650.20, change: 5.50 },
-  { name: 'ICICIBANK', price: 950.40, change: -3.20 },
-];
-
-function renderTicker() {
-  ticker.innerHTML = '';
-  stocks.forEach(stock => {
-    const div = document.createElement('div');
-    div.classList.add('ticker-item');
-    div.innerHTML = `${stock.name} ${stock.price.toFixed(2)} <span class="${stock.change >= 0 ? 'up' : 'down'}">${stock.change >= 0 ? '+' : ''}${stock.change.toFixed(2)}</span>`;
-    ticker.appendChild(div);
-  });
-  // duplicate for smooth looping
-  stocks.forEach(stock => {
-    const div = document.createElement('div');
-    div.classList.add('ticker-item');
-    div.innerHTML = `${stock.name} ${stock.price.toFixed(2)} <span class="${stock.change >= 0 ? 'up' : 'down'}">${stock.change >= 0 ? '+' : ''}${stock.change.toFixed(2)}</span>`;
-    ticker.appendChild(div);
-  });
-}
-
-renderTicker();
 </script>
 
 </body>
