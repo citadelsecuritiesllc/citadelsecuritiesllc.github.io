@@ -155,52 +155,70 @@
   margin: 0 auto;
   text-align: center;
 }
-    /* NSE-style ticker CSS */
-.ticker-wrap {
-  position: relative;
-  overflow: hidden;
-  background: #1b1f30;
-  border-top: 2px solid #444;
-  border-bottom: 2px solid #444;
-  color: #fff;
-  font-family: monospace;
-  height: 40px;
-  display: flex;
-  align-items: center;
-}
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      box-sizing: border-box;
+      text-align: center;
+    }
 
-.ticker {
-  display: flex;
-  white-space: nowrap;
-  will-change: transform;
-  animation: ticker-scroll 25s linear infinite;
-}
+    .header-image {
+      max-width: 150px;
+      height: auto;
+      margin-bottom: 20px;
+    }
 
-.ticker-item {
-  display: inline-block;
-  padding: 0 3rem;
-  font-weight: 600;
-  font-size: 1rem;
-}
+    .header-container h1 {
+      color: #082359;
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
 
-.up { color: #4caf50; }
-.down { color: #f44336; }
+    .ticker-wrap {
+      overflow: hidden;
+      background: #1b1f30;
+      border-top: 2px solid #444;
+      border-bottom: 2px solid #444;
+      height: 40px;
+      display: flex;
+      align-items: center;
+    }
 
-@keyframes ticker-scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
+    .ticker {
+      display: flex;
+      white-space: nowrap;
+      will-change: transform;
+      animation: ticker-scroll 25s linear infinite;
+    }
 
-/* Responsive tweaks */
-@media (max-width: 768px) {
-  .ticker-wrap { height: 35px; }
-  .ticker-item { padding: 0 2rem; font-size: 0.9rem; }
-}
+    .ticker-item {
+      display: inline-block;
+      padding: 0 3rem;
+      font-family: monospace;
+      font-weight: 600;
+      font-size: 1rem;
+    }
 
-@media (max-width: 480px) {
-  .ticker-wrap { height: 30px; }
-  .ticker-item { padding: 0 1.5rem; font-size: 0.8rem; }
-}
+    .up { color: #4caf50; }
+    .down { color: #f44336; }
+
+    @keyframes ticker-scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    @media (max-width: 768px) {
+      .header-container h1 { font-size: 1.5rem; }
+      .ticker-item { padding: 0 2rem; font-size: 0.9rem; }
+      .ticker-wrap { height: 35px; }
+    }
+
+    @media (max-width: 480px) {
+      .header-container h1 { font-size: 1.2rem; }
+      .ticker-item { padding: 0 1.5rem; font-size: 0.8rem; }
+      .ticker-wrap { height: 30px; }
+    }
   </style>
   
   <!-- Meta Pixel Code -->
@@ -230,25 +248,25 @@ src="https://www.facebook.com/tr?id=1527700855048841&ev=PageView&noscript=1"
          alt="Citadel Securities Logo"
          class="header-image">
 
-    <h1 style="color: #082359;">Learn Stock Market Trading With Real Market Experience</h1>
+    <h1>Learn Stock Market Trading With Real Market Experience</h1>
+
+    <!-- NSE-style ticker -->
+    <div class="ticker-wrap">
+      <div class="ticker" id="ticker">
+        <div class="ticker-item">INFY 1,540.00 <span class="up">+55.60 (3.74%)</span></div>
+        <div class="ticker-item">TCS 3,540.00 <span class="down">-20.10 (0.56%)</span></div>
+        <div class="ticker-item">RELIANCE 2,310.50 <span class="up">+15.30 (0.66%)</span></div>
+        <div class="ticker-item">HDFCBANK 1,650.20 <span class="up">+5.50 (0.33%)</span></div>
+        <div class="ticker-item">ICICIBANK 950.40 <span class="down">-3.20 (0.34%)</span></div>
+        <!-- duplicate for seamless loop -->
+        <div class="ticker-item">INFY 1,540.00 <span class="up">+55.60 (3.74%)</span></div>
+        <div class="ticker-item">TCS 3,540.00 <span class="down">-20.10 (0.56%)</span></div>
+        <div class="ticker-item">RELIANCE 2,310.50 <span class="up">+15.30 (0.66%)</span></div>
+        <div class="ticker-item">HDFCBANK 1,650.20 <span class="up">+5.50 (0.33%)</span></div>
+        <div class="ticker-item">ICICIBANK 950.40 <span class="down">-3.20 (0.34%)</span></div>
+      </div>
+    </div>
   </div>
-  <!-- NSE-style ticker -->
-<div class="ticker-wrap">
-  <div class="ticker" id="ticker">
-    <!-- Static placeholder items -->
-    <div class="ticker-item">INFY 1,540.00 <span class="up">+55.60 (3.74%)</span></div>
-    <div class="ticker-item">TCS 3,540.00 <span class="down">-20.10 (0.56%)</span></div>
-    <div class="ticker-item">RELIANCE 2,310.50 <span class="up">+15.30 (0.66%)</span></div>
-    <div class="ticker-item">HDFCBANK 1,650.20 <span class="up">+5.50 (0.33%)</span></div>
-    <div class="ticker-item">ICICIBANK 950.40 <span class="down">-3.20 (0.34%)</span></div>
-    <!-- Duplicate for smooth loop -->
-    <div class="ticker-item">INFY 1,540.00 <span class="up">+55.60 (3.74%)</span></div>
-    <div class="ticker-item">TCS 3,540.00 <span class="down">-20.10 (0.56%)</span></div>
-    <div class="ticker-item">RELIANCE 2,310.50 <span class="up">+15.30 (0.66%)</span></div>
-    <div class="ticker-item">HDFCBANK 1,650.20 <span class="up">+5.50 (0.33%)</span></div>
-    <div class="ticker-item">ICICIBANK 950.40 <span class="down">-3.20 (0.34%)</span></div>
-  </div>
-</div>
 </header>
 
 <section class="card">
